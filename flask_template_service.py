@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import pandas as pd
 import argparse
 import pickle
@@ -33,7 +33,7 @@ def hello():
     return "Welcome, use this query to predict the price : /predict-price?transaction_date=2012.917&house_age=19.5&nearest_distance=306.5947&num_convenience_stores=9&latitude=24.98034&longitude=121.53951"
 
 
-@app.route('/predict-price', methods=["GET"])
+@app.route('/predict-price', methods=["GET", "POST"])
 def predict():
     """
     [summary]
@@ -41,23 +41,53 @@ def predict():
     Returns:
         [string]: [The predicted price of the house from the user request]
     """
-    # This will tell the user if you didn't send all the features to the service
-    if len(request.args) < 6:
-        return "Please make sure you added all the house specification which are: transaction_date, house_age, nearest_distance, num_convenience_stores, latitude, longitude"
-    # Storing the arguments values in variables
-    transaction_date = float(request.args.get('transaction_date'))
-    house_age = float(request.args.get('house_age'))
-    nearest_distance = float(request.args.get('nearest_distance'))
-    num_convenience_stores = float(request.args.get('num_convenience_stores'))
-    latitude = float(request.args.get('latitude'))
-    longitude = float(request.args.get('longitude'))
-    # Adding the features to a 2D matrix to work with the pickle model
-    house_features = np.array([transaction_date, house_age, nearest_distance,
-                               num_convenience_stores, latitude, longitude]).reshape(1, 6)
-    # Using the predict model of the pickle to predict the price
-    predicted_price = loaded_model.predict(house_features)
-    # returning the predicted price to the user
-    return "The predicted price is: "+str(predicted_price)
+    if request.method == "GET":
+        # The data sent in the request
+        requested_data = request.args
+        # This will tell the user if you didn't send all the features to the service
+        if len(requested_data) < 6:
+            return "Please make sure you added all the house specification which are: transaction_date, house_age, nearest_distance, num_convenience_stores, latitude, longitude"
+        # Storing the arguments values in variables
+        transaction_date = float(requested_data.get('transaction_date'))
+        house_age = float(requested_data.get('house_age'))
+        nearest_distance = float(requested_data.get('nearest_distance'))
+        num_convenience_stores = float(
+            requested_data.get('num_convenience_stores'))
+        latitude = float(requested_data.get('latitude'))
+        longitude = float(requested_data.get('longitude'))
+        # Adding the features to a 2D matrix to work with the pickle model
+        house_features = np.array([transaction_date, house_age, nearest_distance,
+                                   num_convenience_stores, latitude, longitude]).reshape(1, 6)
+        # Using the predict model of the pickle to predict the price
+        predicted_price = loaded_model.predict(house_features)[0]
+        # Creating a JSON object that holds the predicted price
+        prediction = {'predicted_price': predicted_price}
+        # returning the predicted price to the user
+        return jsonify(prediction)
+
+    elif request.method == "POST":
+        # The data sent in the request
+        requested_data = request.get_json()
+        # This will tell the user if you didn't send all the features to the service
+        if(len(requested_data) < 6):
+            return "Please make sure you added all the house specification which are: transaction_date, house_age, nearest_distance, num_convenience_stores, latitude, longitude"
+        # Storing the arguments values in variables
+        transaction_date = float(requested_data['transaction_date'])
+        house_age = float(requested_data.get('house_age'))
+        nearest_distance = float(requested_data['nearest_distance'])
+        num_convenience_stores = float(
+            requested_data['num_convenience_stores'])
+        latitude = float(requested_data['latitude'])
+        longitude = float(requested_data['longitude'])
+        # Adding the features to a 2D matrix to work with the pickle model
+        house_features = np.array([transaction_date, house_age, nearest_distance,
+                                   num_convenience_stores, latitude, longitude]).reshape(1, 6)
+        # Using the predict model of the pickle to predict the price
+        predicted_price = loaded_model.predict(house_features)[0]
+        # Creating a JSON object that holds the predicted price
+        prediction = {'predicted_price': predicted_price}
+        # returning the predicted price to the user
+        return jsonify(prediction)
 
 
 if __name__ == '__main__':
