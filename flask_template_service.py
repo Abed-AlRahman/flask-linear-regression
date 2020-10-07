@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify
-import pandas as pd
 import argparse
 import pickle
 import numpy as np
-from sklearn.linear_model import LinearRegression
 
 app = Flask(__name__)
 
@@ -84,7 +82,7 @@ def predict():
                                    num_convenience_stores, latitude, longitude]).reshape(1, 6)
         # Using the predict model of the pickle to predict the price
         predicted_price = loaded_model.predict(house_features)[0]
-        # Creating a JSON object that holds the predicted price
+        # Creating a JSON object that holds the predicted priceس
         prediction = {'predicted_price': predicted_price}
         # returning the predicted price to the user
         return jsonify(prediction)
@@ -95,4 +93,4 @@ if __name__ == '__main__':
     file_path = read_arguments()
     # Loading the model using Scikit-learn library
     loaded_model = pickle.load(open(file_path, 'rb'))
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=True, use_reloader=False, host='0.0.0.0')
