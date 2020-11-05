@@ -1,4 +1,4 @@
-name: dockerizing app
+name: dockerizing app 2
 
 on:
   push:
