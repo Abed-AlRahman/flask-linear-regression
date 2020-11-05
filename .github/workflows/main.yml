@@ -15,7 +15,7 @@ jobs:
       - name: docker build
         uses: actions/checkout@v1
         with:
-          args: build -t abedalrahman/house-pricing .
+          args: docker build -t abedalrahman/house-pricing .
       - name: docker login
         uses: actions/checkout@v1
         env:
@@ -24,5 +24,5 @@ jobs:
       - name: docker push
         uses: actions/checkout@v1
         with:
-          args: push abedalrahman/house-pricing
+          args: docker push abedalrahman/house-pricing
  
