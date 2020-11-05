@@ -22,7 +22,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       - name: docker push
-        uses: actions/docker/cli@master
+        uses: actions/checkout@v1
         with:
           args: push abedalrahman/house-pricing
  
