@@ -36,4 +36,4 @@ jobs:
           heroku_email: "abedn352@gmail.com"
           usedocker: 1
           dontuseforce: 1
-      - run: heroku stack:set heroku-18
+      - run: heroku stack:set heroku-20
