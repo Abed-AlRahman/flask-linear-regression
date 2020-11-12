@@ -1,16 +1,16 @@
 FROM python:3.6.12
 
 # set a directory for the app
-WORKDIR /usr/src/app
+ENV APP_HOME /app
+WORKDIR $APP_HOME
 
-# copy all the files to the container
-COPY . .
+COPY . /app
 
 # install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # define the port number the container should expose
-EXPOSE 5000
-
+EXPOSE 5000/tcp
+EXPOSE 5000/udp
 # run the command
 CMD ["python3", "flask_template_service.py", "-path", "model.sav"]
