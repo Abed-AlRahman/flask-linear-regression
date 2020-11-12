@@ -20,7 +20,7 @@ jobs:
         with:
           password: ${{ secrets.DOCKER_PASSWORD }}
           username: ${{ secrets.DOCKER_USERNAME }}
-          snapshot: true
+
       - name: docker push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/house-pricing
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/house-pricing:latest
  
