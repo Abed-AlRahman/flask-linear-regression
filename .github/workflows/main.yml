@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           username: ${{ secrets.DOCKER_USERNAME }}
       - name: docker push
-        run: docker push ${{secrets.DOCKER_USERNAME}}/house-pricing
+        run: docker push ${{secrets.DOCKER_USERNAME}}/house-pricing:latest
 
   deploy-to-heroku:
     runs-on: ubuntu-latest
