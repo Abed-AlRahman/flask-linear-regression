@@ -1,7 +1,5 @@
 FROM python:3.8.3
 
-FROM heroku/heroku:20
-
 # set a directory for the app
 WORKDIR /usr/src/app
 
