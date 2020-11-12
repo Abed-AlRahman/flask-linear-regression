@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           username: ${{ secrets.DOCKER_USERNAME }}
       - name: docker tag
-        run: docker tag house-pricing:$(git rev-parse --short HEAD)
+        run: docker tag ${{secrets.DOCKER_USERNAME}}/house-pricing:latest
       - name: docker push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/house-pricing
  
