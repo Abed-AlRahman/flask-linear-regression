@@ -33,7 +33,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "thawing-beyond-04979"
-          heroku_email: "abedn325@gmail.com"
+          heroku_email: "abedn352@gmail.com"
           usedocker: 1
           dontuseforce: 1
-      - run: heroku stack:set heroku-20
+      - run: heroku stack:set heroku-18
