@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 import argparse
 import pickle
 import numpy as np
-import os
 
 app = Flask(__name__)
 
@@ -94,4 +93,4 @@ if __name__ == '__main__':
     file_path = read_arguments()
     # Loading the model using Scikit-learn library
     loaded_model = pickle.load(open(file_path, 'rb'))
-    app.run(debug=True, use_reloader=False, host='0.0.0.0',port=int(os.environ.get('PORT', 5000))
+    app.run(debug=True, use_reloader=False, host='0.0.0.0')
