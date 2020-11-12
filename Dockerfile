@@ -1,4 +1,4 @@
-FROM python-3.6.12
+FROM python:3.6.12
 
 # set a directory for the app
 WORKDIR /usr/src/app
