@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # run the command
-CMD ["python", "flask_template_service.py", "-path", "model.sav"]
+CMD ["python3", "flask_template_service.py", "-path", "./model.sav"]
